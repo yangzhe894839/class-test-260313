@@ -1,0 +1,24 @@
+AWSTemplateFormatVersion: 2010-09-09 # 模拟版本号，是固定写法
+
+# Resources资源定义部分
+Resources:
+# myVPC是资源1：vpc创建
+  myVPC:
+    Type: AWS::EC2::VPC                             # type是资源类型
+    Properties:                                     # Properties是资源的一些属性
+      CidrBlock: 10.0.0.0/16                        # vpc的cidr块
+      EnableDnsSupport: 'true'                      # 是否启动DNS服务
+      EnableDnsHostnames: 'true'                    # 给DNS分配名称
+      Tags:                                         # 标签
+        - Key: Name
+          Value: class-vpc-cfn
+# mySubnet是资源2：子网创建和定义
+  mySubnet:
+    Type: AWS::EC2::Subnet
+    Properties:
+      VpcId: !Ref myVPC                             # 引用上面创建的VPC !Ref是资源引用
+      CidrBlock: 10.0.0.0/24                        # 子网的IP段
+      AvailabilityZone: ap-northeast-1a             # 定义创建的子网所在的可用区
+      Tags:
+      - Key: Name
+        Value: class-vpc-cfn

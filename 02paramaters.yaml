@@ -1,0 +1,21 @@
+AWSTemplateFormatVersion: 2010-09-09
+Parameters:
+  envName:                                # 参数1 环境名称
+    Type: String                          # 类型：字符串
+    Default: pub-class-vpc                    # 默认值 
+    AllowedValues:                        # 允许的值列表（下拉菜单）
+      - pub-class-vpc
+      - pri-class-vpc
+  vpcCidr:                                
+    Type: String
+    Default: 10.0.0.0/16
+
+Resources:
+  myVPC:
+    Type: AWS::EC2::VPC
+    Properties:
+      CidrBlock: !Ref vpcCidr             # 引用vpcCidr参数的值
+      EnableDnsSupport: true
+      Tags:
+        - Key: Name
+          Value: !Ref envName             # 引用envName参数的值
